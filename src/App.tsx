@@ -6,9 +6,10 @@ import TextStrumPattern from "./TextStrumPattern";
 import { NoteLength } from "./types.ts";
 import { saveSvg } from "./helper.ts";
 import library from "./strumPatternLib.ts";
-import StrumPatternSvg from "./StrumPattern.tsx";
+import StrumPatternSvg, { defaultStrumOptions } from "./StrumPattern.tsx";
 
 function App() {
+  const [options, setOptions] = useState(defaultStrumOptions);
   const ref = useRef<SVGSVGElement>(null);
   const [value, setValue] = useState("duaAmM r");
   const [noteLength, setNoteLength] = useState<NoteLength>("1/8");
@@ -26,7 +27,12 @@ function App() {
       {/* <StrumPatternSvg {...library["test-1/8"]} />
       <StrumPatternSvg {...library["test-1/16t"]} /> */}
       <div>
-        <TextStrumPattern svgRef={ref} text={value} noteLength={noteLength} />
+        <TextStrumPattern
+          options={options}
+          svgRef={ref}
+          text={value}
+          noteLength={noteLength}
+        />
       </div>
       <input value={value} onChange={onChange}></input>
       <select onChange={selectNoteLength} value={noteLength}>
@@ -55,6 +61,7 @@ function App() {
           {Object.entries(library).map(([key, sp]) => (
             <div key={key} style={{ height: "75px" }}>
               <StrumPatternSvg
+                options={options}
                 strums={sp.strums}
                 width="100%"
                 height="100%"
@@ -63,6 +70,27 @@ function App() {
             </div>
           ))}
         </div>
+      </div>
+      <div>
+        {Object.entries(options).map(([key, opt]) => (
+          <div key={key}>
+            {key}
+            <input
+              value={opt}
+              onChange={(e) =>
+                setOptions((v) => ({
+                  ...v,
+                  [key]:
+                    e.target.value === "0"
+                      ? 0
+                      : isNaN(Number(e.target.value))
+                      ? e.target.value
+                      : Number(e.target.value),
+                }))
+              }
+            ></input>
+          </div>
+        ))}
       </div>
     </>
   );

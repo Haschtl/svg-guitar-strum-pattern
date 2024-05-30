@@ -12,7 +12,7 @@ interface Props extends Partial<StrumPatternDefiniton> {
   height?: string | number;
 }
 
-const defaultStrumOptions: StrumPatternOptions = {
+export const defaultStrumOptions: StrumPatternOptions = {
   arrowColor: "#000000",
   taktColor: "#555555",
   textColor: "#555555",
@@ -38,7 +38,7 @@ const StrumPatternSvg: React.FC<Props> = ({
   width,
   height,
 }) => {
-  const _options = { ...options, ...defaultStrumOptions };
+  const _options = { ...defaultStrumOptions, ...options };
   const chars = createTaktChars(strums.length, noteLength);
   const calcHeight =
     _options.strumHeight + _options.headerHeight + 2 * _options.taktHeight;
@@ -221,6 +221,7 @@ const NoteGroup: React.FC<NoteGroupProps> = ({
           fontSize={14}
           textAnchor="middle"
           fontFamily="sans-serif"
+          fill={fill}
         >
           {subtitle}
         </text>
@@ -485,10 +486,10 @@ const createTaktChars = (quantity: number, noteLength: NoteLength) => {
     } else {
       if (triplet) {
         if (i % 3 === 0) {
-          const v=i / 3 + 1
+          const v = i / 3 + 1;
           const odd = v % 2 === 1;
-          if(!odd){
-            return "&"
+          if (!odd) {
+            return "&";
           }
           return `${v}`;
         } else {
