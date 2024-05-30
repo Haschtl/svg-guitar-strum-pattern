@@ -25,6 +25,14 @@ const text2strums = (text: string): Strum[] => {
         strum.variant = "muted";
         strum.direction = "up";
         break;
+      case "a":
+        strum.variant = "arpeggio";
+        strum.direction = "down";
+        break;
+      case "A":
+        strum.variant = "arpeggio";
+        strum.direction = "up";
+        break;
       default:
         strum.variant = char as "a";
         break;

@@ -5,10 +5,12 @@ import "./App.css";
 import TextStrumPattern from "./TextStrumPattern";
 import { NoteLength } from "./types.ts";
 import { saveSvg } from "./helper.ts";
+import library from "./strumPatternLib.ts";
+import StrumPatternSvg from "./StrumPattern.tsx";
 
 function App() {
   const ref = useRef<SVGSVGElement>(null);
-  const [value, setValue] = useState("dudumM r");
+  const [value, setValue] = useState("duaAmM r");
   const [noteLength, setNoteLength] = useState<NoteLength>("1/8");
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -41,10 +43,27 @@ function App() {
         <li>u: Up-stroke</li>
         <li>m: Muted down-stroke</li>
         <li>M: Muted up-stroke</li>
+        <li>a: Arpeggio down-stroke</li>
+        <li>A: Arpeggio up-stroke</li>
         <li> : Pause</li>
         <li>r: Rest</li>
         <li>Any other character is just inserted</li>
       </ul>
+      <div>
+        <div>Examples</div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "50px" }}>
+          {Object.entries(library).map(([key, sp]) => (
+            <div key={key} style={{ height: "75px" }}>
+              <StrumPatternSvg
+                strums={sp.strums}
+                width="100%"
+                height="100%"
+                noteLength={sp.noteLength}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

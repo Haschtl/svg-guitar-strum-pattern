@@ -29,8 +29,8 @@ const library: Record<string, StrumPattern> = {
       { variant: "A" },
     ],
   },
-  "dpdpdpdp-1/4": {
-    noteLength: "1/4",
+  "dpdpdpdp-1/8": {
+    noteLength: "1/8",
     strums: [
       { direction: "down" },
       { variant: "pause" },
@@ -42,8 +42,8 @@ const library: Record<string, StrumPattern> = {
       { variant: "pause" },
     ],
   },
-  "dudududu-1/4": {
-    noteLength: "1/4",
+  "dudududu-1/8": {
+    noteLength: "1/8",
     strums: [
       { direction: "down" },
       { direction: "up" },
@@ -55,8 +55,8 @@ const library: Record<string, StrumPattern> = {
       { direction: "up" },
     ],
   },
-  "dpdpdpdu-1/4": {
-    noteLength: "1/4",
+  "dpdpdpdu-1/8": {
+    noteLength: "1/8",
     strums: [
       { direction: "down" },
       { variant: "pause" },
@@ -68,8 +68,8 @@ const library: Record<string, StrumPattern> = {
       { direction: "up" },
     ],
   },
-  "dpdpdudu-1/4": {
-    noteLength: "1/4",
+  "dpdpdudu-1/8": {
+    noteLength: "1/8",
     strums: [
       { direction: "down" },
       { variant: "pause" },
@@ -78,6 +78,79 @@ const library: Record<string, StrumPattern> = {
       { direction: "down" },
       { direction: "up" },
       { direction: "down" },
+      { direction: "up" },
+    ],
+  },
+  "dpdudpdu-1/8": {
+    noteLength: "1/8",
+    strums: [
+      { direction: "down" },
+      { variant: "pause" },
+      { direction: "down" },
+      { direction: "up" },
+      { direction: "down" },
+      { variant: "pause" },
+      { direction: "down" },
+      { direction: "up" },
+    ],
+  },
+  "dddddddd-1/8": {
+    noteLength: "1/8",
+    strums: [
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+    ],
+  },
+  "dpdududu-1/8": {
+    noteLength: "1/8",
+    strums: [
+      { direction: "down" },
+      { variant: "pause" },
+      { direction: "down" },
+      { direction: "up" },
+      { direction: "down" },
+      { direction: "up" },
+      { direction: "down" },
+      { direction: "up" },
+    ],
+  },
+  "dppdpuppudpu-1/8t": {
+    noteLength: "1/8 triplet",
+    strums: [
+      { direction: "down" },
+      { variant: "pause" },
+      { variant: "pause" },
+      { direction: "down" },
+      { variant: "pause" },
+      { direction: "up" },
+      { variant: "pause" },
+      { variant: "pause" },
+      { direction: "up" },
+      { direction: "down" },
+      { variant: "pause" },
+      { direction: "up" },
+    ],
+  },
+  "dpudpudpudpu-1/8t": {
+    noteLength: "1/8 triplet",
+    strums: [
+      { direction: "down" },
+      { variant: "pause" },
+      { direction: "up" },
+      { direction: "down" },
+      { variant: "pause" },
+      { direction: "up" },
+      { direction: "down" },
+      { variant: "pause" },
+      { direction: "up" },
+      { direction: "down" },
+      { variant: "pause" },
       { direction: "up" },
     ],
   },

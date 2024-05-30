@@ -8,6 +8,8 @@ import {
 
 interface Props extends Partial<StrumPatternDefiniton> {
   svgRef?: React.LegacyRef<SVGSVGElement>;
+  width?: string | number;
+  height?: string | number;
 }
 
 const defaultStrumOptions: StrumPatternOptions = {
@@ -33,19 +35,22 @@ const StrumPatternSvg: React.FC<Props> = ({
   options = {},
   noteLength = "1/4",
   svgRef,
+  width,
+  height,
 }) => {
   const _options = { ...options, ...defaultStrumOptions };
   const chars = createTaktChars(strums.length, noteLength);
+  const calcHeight =
+    _options.strumHeight + _options.headerHeight + 2 * _options.taktHeight;
+  const calcWidth =
+    (_options.strumWidth + _options.strumGap) * strums.length -
+    _options.strumGap;
   return (
     <svg
       ref={svgRef}
-      width={
-        (_options.strumWidth + _options.strumGap) * strums.length -
-        _options.strumGap
-      }
-      height={
-        _options.strumHeight + _options.headerHeight + 2 * _options.taktHeight
-      }
+      width={width ?? calcWidth}
+      height={height ?? calcHeight}
+      viewBox={`0 0 ${calcWidth} ${calcHeight}`}
     >
       {strums.map((s, i) => (
         <StrumHeader
@@ -236,7 +241,7 @@ const StrumArrow: React.FC<
     >
 > = ({
   variant = "normal",
-//   direction = "up",
+  //   direction = "up",
   height = 100,
   width = 50,
   strokeWidth = 0.2,
@@ -258,6 +263,64 @@ const StrumArrow: React.FC<
           strokeWidth="0"
           {...pathProps}
         />
+      );
+    case "arpeggio":
+      // eslint-disable-next-line no-case-declarations
+      const offsetY = height * headHeight * 0.95;
+      // eslint-disable-next-line no-case-declarations
+      const numWaves = 6;
+      // eslint-disable-next-line no-case-declarations
+      const amplitude = 6;
+      // eslint-disable-next-line no-case-declarations
+      const offsetX = amplitude * 2;
+      // eslint-disable-next-line no-case-declarations
+      const wavelength = height / numWaves / 2;
+      return (
+        <>
+          <path
+            d={`m${0},${height * headHeight}l${width / 2},${
+              -height * headHeight
+            }l${width / 2},${height * headHeight}`}
+            // strokeLinecap="null"
+            // strokeLinejoin="null"
+            //   strokeDasharray="null"
+            strokeWidth="0"
+            {...pathProps}
+          />
+          <path
+            // d={
+            //   `M0 , ${offset}` +
+            //   new Array(6)
+            //     .fill(0)
+            //     .map(
+            //       (_, i) =>
+            //         `Q${wavelength / 2 + wavelength * i} ${
+            //           (i % 2 === 0 ? -amplitude : amplitude) + offset
+            //         }, ${wavelength * (i + 1)} ${offset}`
+            //     )
+            //     .join(", ")
+            // }
+            d={
+              `M${offsetX} , ${offsetY}` +
+              new Array(numWaves)
+                .fill(0)
+                .map(
+                  (_, i) =>
+                    `Q${(i % 2 === 0 ? -amplitude : amplitude) + offsetX} ${
+                      wavelength / 2 + wavelength * i + offsetY
+                    } , ${offsetX} ${wavelength * (i + 1) + offsetY}`
+                )
+                .join(", ")
+            }
+            // strokeLinecap="null"
+            // strokeLinejoin="null"
+            //   strokeDasharray="null"
+            strokeWidth={width * strokeWidth}
+            {...pathProps}
+            fill={"transparent"}
+            stroke={pathProps.fill}
+          />
+        </>
       );
     case "accent":
       strokeWidth = Math.min(1, strokeWidth * 2);
@@ -392,11 +455,26 @@ const StrumHeader: React.FC<
 export default StrumPatternSvg;
 
 const createTaktChars = (quantity: number, noteLength: NoteLength) => {
+  const triplet = noteLength.includes("triplet");
   return new Array(quantity).fill(0).map((_, i) => {
     if (noteLength.includes("/4")) {
       //   return `${(i % 4) + 1}`;
+      if (triplet) {
+        if (i % 3 === 0) {
+          return `${i / 3 + 1}`;
+        } else {
+          return "";
+        }
+      }
       return `${i + 1}`;
     } else if (noteLength.includes("/8")) {
+      if (triplet) {
+        if (i % 3 === 0) {
+          return `${i / 3 + 1}`;
+        } else {
+          return "";
+        }
+      }
       const odd = i % 2 === 1;
       if (odd) {
         return "&";
@@ -405,6 +483,18 @@ const createTaktChars = (quantity: number, noteLength: NoteLength) => {
         return `${Math.round(i / 2) + 1}`;
       }
     } else {
+      if (triplet) {
+        if (i % 3 === 0) {
+          const v=i / 3 + 1
+          const odd = v % 2 === 1;
+          if(!odd){
+            return "&"
+          }
+          return `${v}`;
+        } else {
+          return "";
+        }
+      }
       const odd = i % 2 === 1;
       const halfOdd = (i / 2) % 2 === 1;
       if (odd) {

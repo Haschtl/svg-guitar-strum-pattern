@@ -33,7 +33,7 @@ export interface StrumPatternOptions {
 
 export interface Strum {
   direction?: "up" | "down";
-  variant?: "normal" | "muted" | "rest" | "accent" | "pause" | StrumText;
+  variant?: "normal" | "muted"|"arpeggio" | "rest" | "accent" | "pause" | StrumText;
   heading?: string;
 }
 
