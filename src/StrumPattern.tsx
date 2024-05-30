@@ -236,7 +236,7 @@ const StrumArrow: React.FC<
     >
 > = ({
   variant = "normal",
-  direction = "up",
+//   direction = "up",
   height = 100,
   width = 50,
   strokeWidth = 0.2,
@@ -309,6 +309,7 @@ const StrumArrow: React.FC<
     case "pause":
       return null;
     case "rest":
+      // eslint-disable-next-line no-case-declarations
       const h_factor = 3;
       return (
         <>
@@ -391,7 +392,7 @@ const StrumHeader: React.FC<
 export default StrumPatternSvg;
 
 const createTaktChars = (quantity: number, noteLength: NoteLength) => {
-  return new Array(quantity).fill(0).map((v, i) => {
+  return new Array(quantity).fill(0).map((_, i) => {
     if (noteLength.includes("/4")) {
       //   return `${(i % 4) + 1}`;
       return `${i + 1}`;
