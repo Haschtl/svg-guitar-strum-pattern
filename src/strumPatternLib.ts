@@ -1,7 +1,7 @@
 import { StrumPattern } from "./types";
 
 const library: Record<string, StrumPattern> = {
-  "test-1/8": {
+  "d uMArdxA-1/8": {
     noteLength: "1/8",
     strums: [
       { direction: "down", heading: "x" },
@@ -15,7 +15,7 @@ const library: Record<string, StrumPattern> = {
       { variant: "A" },
     ],
   },
-  "test-1/16t": {
+  "d uMArdxA-1/16t": {
     noteLength: "1/16 triplet",
     strums: [
       { direction: "down", heading: "x" },
@@ -29,7 +29,7 @@ const library: Record<string, StrumPattern> = {
       { variant: "A" },
     ],
   },
-  "dpdpdpdp-1/8": {
+  "d d d d -1/8": {
     noteLength: "1/8",
     strums: [
       { direction: "down" },
@@ -55,7 +55,7 @@ const library: Record<string, StrumPattern> = {
       { direction: "up" },
     ],
   },
-  "dpdpdpdu-1/8": {
+  "d d d du-1/8": {
     noteLength: "1/8",
     strums: [
       { direction: "down" },
@@ -68,7 +68,7 @@ const library: Record<string, StrumPattern> = {
       { direction: "up" },
     ],
   },
-  "dpdpdudu-1/8": {
+  "d d dudu-1/8": {
     noteLength: "1/8",
     strums: [
       { direction: "down" },
@@ -81,7 +81,7 @@ const library: Record<string, StrumPattern> = {
       { direction: "up" },
     ],
   },
-  "dpdudpdu-1/8": {
+  "d dud du-1/8": {
     noteLength: "1/8",
     strums: [
       { direction: "down" },
@@ -107,7 +107,7 @@ const library: Record<string, StrumPattern> = {
       { direction: "down" },
     ],
   },
-  "dpdududu-1/8": {
+  "d dududu-1/8": {
     noteLength: "1/8",
     strums: [
       { direction: "down" },
@@ -120,7 +120,7 @@ const library: Record<string, StrumPattern> = {
       { direction: "up" },
     ],
   },
-  "dppdpuppudpu-1/8t": {
+  "d  d u  ud u-1/8t": {
     noteLength: "1/8 triplet",
     strums: [
       { direction: "down" },
@@ -137,7 +137,7 @@ const library: Record<string, StrumPattern> = {
       { direction: "up" },
     ],
   },
-  "dpudpudpudpu-1/8t": {
+  "d ud ud ud u-1/8t": {
     noteLength: "1/8 triplet",
     strums: [
       { direction: "down" },

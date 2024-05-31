@@ -19,8 +19,8 @@ export const defaultStrumOptions: StrumPatternOptions = {
   taktHeight: 30,
   taktFontSize: 0.8,
 
-  taktLineWidth: 4,
-  taktLineHeight: 14,
+  taktLineWidth: 2,
+  taktLineHeight: 8,
   strumWidth: 20,
   strumHeight: 80,
   strumGap: 30,

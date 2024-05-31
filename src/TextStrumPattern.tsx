@@ -1,6 +1,18 @@
 import StrumPatternSvg from "./StrumPattern";
 import { NoteLength, Strum, StrumPatternOptions } from "./types";
 
+export const parseKey = (
+  text: string
+): { strums: Strum[]; strumText: string; noteLength: NoteLength } => {
+  const split = text.split("-");
+  if (split.length !== 2) {
+    return { noteLength: "1/4", strumText: "", strums: [] };
+  }
+  const strums = text2strums(split[0]);
+  const noteLength = split[1].replace("t", " triplet") as NoteLength;
+  return { strums, strumText: split[0], noteLength };
+};
+
 const text2strums = (text: string): Strum[] => {
   return text.split("").map((char) => {
     const strum: Strum = {};

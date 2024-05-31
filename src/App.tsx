@@ -2,7 +2,7 @@ import { ChangeEvent, useCallback, useRef, useState } from "react";
 import "./App.css";
 // import StrumPatternSvg from "./StrumPattern";
 // import library from "./strumPatternLib";
-import TextStrumPattern from "./TextStrumPattern";
+import TextStrumPattern, { parseKey } from "./TextStrumPattern";
 import { NoteLength } from "./types.ts";
 import { saveSvg } from "./helper.ts";
 import library from "./strumPatternLib.ts";
@@ -57,9 +57,17 @@ function App() {
       </ul>
       <div>
         <div>Examples</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "50px" }}>
+        <div className="strum-lib">
           {Object.entries(library).map(([key, sp]) => (
-            <div key={key} style={{ height: "75px" }}>
+            <div
+              key={key}
+              className="strum-lib-entry"
+              onClick={() => {
+                const { strumText, noteLength } = parseKey(key);
+                setValue(strumText);
+                setNoteLength(noteLength);
+              }}
+            >
               <StrumPatternSvg
                 options={options}
                 strums={sp.strums}

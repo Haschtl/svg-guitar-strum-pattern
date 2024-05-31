@@ -1,0 +1,19 @@
+
+
+.strum-lib-entry{
+    border-radius: 5px;
+    background-color: rgb(229, 229, 229);
+    cursor: pointer;
+    height: 75px;
+    padding:5px;
+}
+.strum-lib-entry:hover{
+    background-color: rgb(191, 191, 191);
+
+}
+
+.strum-lib{
+    display: flex; 
+    flex-wrap: wrap; 
+    gap:20px;
+}
