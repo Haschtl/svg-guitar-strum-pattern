@@ -1,3 +1,4 @@
+import { memo } from "react";
 import StrumPatternSvg from "./StrumPattern";
 import { NoteLength, Strum, StrumPatternOptions } from "./types";
 
@@ -57,7 +58,9 @@ const TextStrumPattern: React.FC<{
   noteLength: NoteLength;
   options?: Partial<StrumPatternOptions>;
   svgRef?: React.LegacyRef<SVGSVGElement>;
-}> = ({ text, options, noteLength, svgRef }) => {
+  width?: string | number | null;
+  height?: string | number | null;
+}> = ({ text, options, noteLength, svgRef, ...props }) => {
   const strums = text2strums(text);
   return (
     <StrumPatternSvg
@@ -65,8 +68,10 @@ const TextStrumPattern: React.FC<{
       strums={strums}
       options={options}
       noteLength={noteLength}
+      {...props}
     />
   );
 };
 
-export default TextStrumPattern;
+const TextStrumPatternMemo = memo(TextStrumPattern);
+export default TextStrumPatternMemo;

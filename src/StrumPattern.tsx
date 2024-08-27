@@ -8,8 +8,8 @@ import {
 
 interface Props extends Partial<StrumPatternDefiniton> {
   svgRef?: React.LegacyRef<SVGSVGElement>;
-  width?: string | number;
-  height?: string | number;
+  width?: string | number | null;
+  height?: string | number | null;
 }
 
 export const defaultStrumOptions: StrumPatternOptions = {
@@ -48,8 +48,8 @@ const StrumPatternSvg: React.FC<Props> = ({
   return (
     <svg
       ref={svgRef}
-      width={width ?? calcWidth}
-      height={height ?? calcHeight}
+      width={width === null ? undefined : width ?? calcWidth}
+      height={height === null ? undefined : height ?? calcHeight}
       viewBox={`0 0 ${calcWidth} ${calcHeight}`}
     >
       {strums.map((s, i) => (
