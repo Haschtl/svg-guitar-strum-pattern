@@ -1,4 +1,6 @@
-import {
+import React from "react";
+
+import type {
   FullStrumPatternDefiniton,
   NoteLength,
   Strum,
@@ -7,25 +9,25 @@ import {
 } from "./types";
 
 interface Props extends Partial<StrumPatternDefiniton> {
-  svgRef?: React.LegacyRef<SVGSVGElement>;
-  width?: string | number;
-  height?: string | number;
+  height?: number | string;
+  svgRef?: React.RefObject<SVGSVGElement | null>;
+  width?: number | string;
 }
 
 export const defaultStrumOptions: StrumPatternOptions = {
   arrowColor: "#000000",
-  taktColor: "#555555",
-  textColor: "#555555",
-  taktHeight: 30,
-  taktFontSize: 0.8,
-
-  taktLineWidth: 2,
-  taktLineHeight: 8,
-  strumWidth: 20,
-  strumHeight: 80,
-  strumGap: 30,
-  headerHeight: 30,
   headerFontSize: 0.8,
+  headerHeight: 30,
+  strumGap: 30,
+  strumHeight: 80,
+
+  strumWidth: 20,
+  taktColor: "#555555",
+  taktFontSize: 0.8,
+  taktHeight: 30,
+  taktLineHeight: 8,
+  taktLineWidth: 2,
+  textColor: "#555555",
 };
 
 const FIX_FACTOR = 0.8;
@@ -47,18 +49,18 @@ const StrumPatternSvg: React.FC<Props> = ({
     _options.strumGap;
   return (
     <svg
-      ref={svgRef}
-      width={width ?? calcWidth}
       height={height ?? calcHeight}
+      ref={svgRef}
       viewBox={`0 0 ${calcWidth} ${calcHeight}`}
+      width={width ?? calcWidth}
     >
       {strums.map((s, i) => (
         <StrumHeader
-          key={"head" + i}
-          height={_options.headerHeight}
-          width={_options.strumWidth}
           fill={_options.textColor}
           fontSize={_options.headerFontSize}
+          height={_options.headerHeight}
+          key={"head" + i}
+          width={_options.strumWidth}
           x={
             (_options.strumWidth + _options.strumGap) * i +
             _options.strumWidth / 2
@@ -81,30 +83,30 @@ const StrumPatternSvg: React.FC<Props> = ({
         >
           <StrumArrow
             {...s}
+            fill={_options.arrowColor}
             height={_options.strumHeight}
             width={_options.strumWidth}
-            fill={_options.arrowColor}
           />
         </g>
       ))}
 
       {chars.map((s, i) => (
         <StrumHeader
-          key={"head" + i}
-          height={_options.taktHeight}
-          width={_options.strumWidth}
           fill={_options.taktColor}
           fontSize={_options.taktFontSize}
-          y={_options.headerHeight + _options.strumHeight * FIX_FACTOR}
+          height={_options.taktHeight}
+          key={"head" + i}
+          width={_options.strumWidth}
           x={
             (_options.strumWidth + _options.strumGap) * i +
             _options.strumWidth / 2
           }
+          y={_options.headerHeight + _options.strumHeight * FIX_FACTOR}
         >
           {s}
         </StrumHeader>
       ))}
-      <NoteGroups strums={strums} options={_options} noteLength={noteLength} />
+      <NoteGroups noteLength={noteLength} options={_options} strums={strums} />
     </svg>
   );
 };
@@ -130,19 +132,19 @@ const NoteGroups: React.FC<FullStrumPatternDefiniton> = ({
       <>
         {new Array(quantity).fill(0).map((_, i) => (
           <NoteGroup
+            fill={options.taktColor}
+            horizontalStrokes={horizontalStrokes}
             key={"g" + i}
             quantity={3}
-            taktLineWidth={options.taktLineWidth}
-            fill={options.taktColor}
+            subtitle={"3"}
             taktLineHeight={options.taktLineHeight}
-            horizontalStrokes={horizontalStrokes}
+            taktLineWidth={options.taktLineWidth}
             width={3 * (options.strumWidth + options.strumGap)}
-            y={y}
             x={
               3 * (options.strumWidth + options.strumGap) * i +
               options.strumWidth / 2
             }
-            subtitle={"3"}
+            y={y}
           />
         ))}
       </>
@@ -153,18 +155,18 @@ const NoteGroups: React.FC<FullStrumPatternDefiniton> = ({
     <>
       {new Array(quantity).fill(0).map((_, i) => (
         <NoteGroup
+          fill={options.taktColor}
+          horizontalStrokes={horizontalStrokes}
           key={"g" + i}
           quantity={2}
-          horizontalStrokes={horizontalStrokes}
-          fill={options.taktColor}
-          taktLineWidth={options.taktLineWidth}
           taktLineHeight={options.taktLineHeight}
+          taktLineWidth={options.taktLineWidth}
           width={2 * (options.strumWidth + options.strumGap)}
-          y={y}
           x={
             2 * (options.strumWidth + options.strumGap) * i +
             options.strumWidth / 2
           }
+          y={y}
         />
       ))}
     </>
@@ -172,15 +174,15 @@ const NoteGroups: React.FC<FullStrumPatternDefiniton> = ({
 };
 
 interface NoteGroupProps {
-  quantity: number;
-  horizontalStrokes: number;
-  width: number;
-  y: number;
-  x: number;
-  taktLineWidth: number;
-  taktLineHeight: number;
-  subtitle?: string;
   fill: string;
+  horizontalStrokes: number;
+  quantity: number;
+  subtitle?: string;
+  taktLineHeight: number;
+  taktLineWidth: number;
+  width: number;
+  x: number;
+  y: number;
 }
 const NoteGroup: React.FC<NoteGroupProps> = ({
   quantity,
@@ -192,53 +194,51 @@ const NoteGroup: React.FC<NoteGroupProps> = ({
   taktLineHeight,
   subtitle,
   fill,
-}) => {
-  return (
-    <g transform={`translate(${x},${y})`}>
-      {new Array(quantity).fill(0).map((_, i) => (
-        <rect
-          key={"r" + i}
-          width={taktLineWidth}
-          height={taktLineHeight}
-          fill={fill}
-          x={(width * i) / quantity - taktLineWidth / 2}
-        ></rect>
-      ))}
-      {new Array(horizontalStrokes).fill(0).map((_, i) => (
-        <rect
-          key={"r" + i}
-          width={(width * (quantity - 1)) / quantity + taktLineWidth}
-          height={taktLineWidth / horizontalStrokes}
-          fill={fill}
-          y={taktLineHeight - i * taktLineWidth}
-          x={-taktLineWidth / 2}
-        ></rect>
-      ))}
-      {subtitle ? (
-        <text
-          x={(width * (quantity - 1)) / quantity / 2}
-          y={taktLineHeight + 16}
-          fontSize={14}
-          textAnchor="middle"
-          fontFamily="sans-serif"
-          fill={fill}
-        >
-          {subtitle}
-        </text>
-      ) : null}
-    </g>
-  );
-};
+}) => (
+  <g transform={`translate(${x},${y})`}>
+    {new Array(quantity).fill(0).map((_, i) => (
+      <rect
+        fill={fill}
+        height={taktLineHeight}
+        key={"r" + i}
+        width={taktLineWidth}
+        x={(width * i) / quantity - taktLineWidth / 2}
+      />
+    ))}
+    {new Array(horizontalStrokes).fill(0).map((_, i) => (
+      <rect
+        fill={fill}
+        height={taktLineWidth / horizontalStrokes}
+        key={"r" + i}
+        width={(width * (quantity - 1)) / quantity + taktLineWidth}
+        x={-taktLineWidth / 2}
+        y={taktLineHeight - i * taktLineWidth}
+      />
+    ))}
+    {subtitle ? (
+      <text
+        fill={fill}
+        fontFamily="sans-serif"
+        fontSize={14}
+        textAnchor="middle"
+        x={(width * (quantity - 1)) / quantity / 2}
+        y={taktLineHeight + 16}
+      >
+        {subtitle}
+      </text>
+    ) : null}
+  </g>
+);
 
 const StrumArrow: React.FC<
   Omit<Strum, "direction"> &
     Partial<
-      {
-        height: number;
-        width: number;
-        strokeWidth: number;
+      React.SVGProps<SVGPathElement & SVGRectElement & SVGTextElement> & {
         headHeight: number;
-      } & React.SVGProps<SVGPathElement & SVGRectElement & SVGTextElement>
+        height: number;
+        strokeWidth: number;
+        width: number;
+      }
     >
 > = ({
   variant = "normal",
@@ -279,7 +279,7 @@ const StrumArrow: React.FC<
       return (
         <>
           <path
-            d={`m${0},${height * headHeight}l${width / 2},${
+            d={`m0,${height * headHeight}l${width / 2},${
               -height * headHeight
             }l${width / 2},${height * headHeight}`}
             // strokeLinecap="null"
@@ -353,21 +353,21 @@ const StrumArrow: React.FC<
             {...pathProps}
           />
           <rect
-            width={width * strokeWidth}
             height={height * headHeight * 2}
-            x={width / 2 - (width * strokeWidth) / 2}
             style={{ transformBox: "fill-box", transformOrigin: "center" }}
             transform="rotate(45 0 0)"
-            {...pathProps}
-          ></rect>
-          <rect
             width={width * strokeWidth}
-            height={height * headHeight * 2}
             x={width / 2 - (width * strokeWidth) / 2}
+            {...pathProps}
+          />
+          <rect
+            height={height * headHeight * 2}
             style={{ transformBox: "fill-box", transformOrigin: "center" }}
             transform="rotate(-45 0 0)"
+            width={width * strokeWidth}
+            x={width / 2 - (width * strokeWidth) / 2}
             {...pathProps}
-          ></rect>
+          />
         </>
       );
     case "pause":
@@ -378,37 +378,37 @@ const StrumArrow: React.FC<
       return (
         <>
           <rect
-            y={(height / 4) * (1 - 1 / h_factor)}
+            height={height / h_factor}
+            width={width / 4}
             x={0 + width / 8}
-            width={width / 4}
-            height={height / h_factor}
-            {...pathProps}
-          ></rect>
-          <rect
             y={(height / 4) * (1 - 1 / h_factor)}
-            x={width / 2 + width / 8}
-            width={width / 4}
-            height={height / h_factor}
             {...pathProps}
-          ></rect>
+          />
+          <rect
+            height={height / h_factor}
+            width={width / 4}
+            x={width / 2 + width / 8}
+            y={(height / 4) * (1 - 1 / h_factor)}
+            {...pathProps}
+          />
         </>
       );
     default:
       return (
         <text
           {...pathProps}
-          y={height / 2}
+          fontFamily="sans-serif"
           fontSize={height / 2}
-          x={width / 2}
+          fontWeight="bold"
+          lengthAdjust="spacingAndGlyphs"
           textAnchor="middle"
+          textLength={width}
+          width={width}
+          x={width / 2}
+          y={height / 2}
           //   fontSizeAdjust={}
           //   fontVariant="bold"
-          fontFamily="sans-serif"
-          fontWeight="bold"
           //   x={width / 2}
-          textLength={width}
-          lengthAdjust="spacingAndGlyphs"
-          width={width}
           //   height={height}
         >
           {variant}
@@ -420,11 +420,11 @@ const StrumArrow: React.FC<
 const StrumHeader: React.FC<
   Omit<
     React.SVGProps<SVGTextElement>,
-    "height" | "width" | "fontSize" | "number"
+    "fontSize" | "height" | "number" | "width"
   > & {
+    fontSize: number;
     height: number;
     width: number;
-    fontSize: number;
     y?: number;
   }
 > = ({ children, height, width, fontSize, y = 0, ...props }) => {
@@ -433,16 +433,16 @@ const StrumHeader: React.FC<
   }
   return (
     <text
+      fontFamily="sans-serif"
+      fontSize={height * fontSize}
+      fontWeight="bold"
       height={height}
+      textAnchor="middle"
+      textLength={width}
       width={height}
       y={y + height * fontSize}
-      fontSize={height * fontSize}
-      textLength={width}
-      textAnchor="middle"
       //   fontSizeAdjust={}
       //   fontVariant="bold"
-      fontFamily="sans-serif"
-      fontWeight="bold"
       //   x={width / 2}
       //   lengthAdjust="spacingAndGlyphs"
       //   height={height}

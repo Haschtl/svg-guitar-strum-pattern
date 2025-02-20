@@ -1,34 +1,8 @@
-import { StrumPattern } from "./types";
+/* eslint-disable sort-keys-fix/sort-keys-fix */
+/* eslint-disable sort-keys */
+import type { StrumPattern } from "./types";
 
 const library: Record<string, StrumPattern> = {
-  "d uMArdxA-1/8": {
-    noteLength: "1/8",
-    strums: [
-      { direction: "down", heading: "x" },
-      { variant: "pause" },
-      { direction: "up", heading: "^" },
-      { variant: "muted" },
-      { variant: "accent" },
-      { variant: "rest" },
-      { direction: "down" },
-      { variant: "x" },
-      { variant: "A" },
-    ],
-  },
-  "d uMArdxA-1/16t": {
-    noteLength: "1/16 triplet",
-    strums: [
-      { direction: "down", heading: "x" },
-      { variant: "pause" },
-      { direction: "up", heading: "^" },
-      { variant: "muted" },
-      { variant: "accent" },
-      { variant: "rest" },
-      { direction: "down" },
-      { variant: "x" },
-      { variant: "A" },
-    ],
-  },
   "d d d d -1/8": {
     noteLength: "1/8",
     strums: [
@@ -42,16 +16,20 @@ const library: Record<string, StrumPattern> = {
       { variant: "pause" },
     ],
   },
-  "dudududu-1/8": {
-    noteLength: "1/8",
+  "d  d u  ud u-1/8t": {
+    noteLength: "1/8 triplet",
     strums: [
       { direction: "down" },
+      { variant: "pause" },
+      { variant: "pause" },
+      { direction: "down" },
+      { variant: "pause" },
+      { direction: "up" },
+      { variant: "pause" },
+      { variant: "pause" },
       { direction: "up" },
       { direction: "down" },
-      { direction: "up" },
-      { direction: "down" },
-      { direction: "up" },
-      { direction: "down" },
+      { variant: "pause" },
       { direction: "up" },
     ],
   },
@@ -94,19 +72,6 @@ const library: Record<string, StrumPattern> = {
       { direction: "up" },
     ],
   },
-  "dddddddd-1/8": {
-    noteLength: "1/8",
-    strums: [
-      { direction: "down" },
-      { direction: "down" },
-      { direction: "down" },
-      { direction: "down" },
-      { direction: "down" },
-      { direction: "down" },
-      { direction: "down" },
-      { direction: "down" },
-    ],
-  },
   "d dududu-1/8": {
     noteLength: "1/8",
     strums: [
@@ -120,21 +85,32 @@ const library: Record<string, StrumPattern> = {
       { direction: "up" },
     ],
   },
-  "d  d u  ud u-1/8t": {
-    noteLength: "1/8 triplet",
+  "d uMArdxA-1/16t": {
+    noteLength: "1/16 triplet",
     strums: [
+      { direction: "down", heading: "x" },
+      { variant: "pause" },
+      { direction: "up", heading: "^" },
+      { variant: "muted" },
+      { variant: "accent" },
+      { variant: "rest" },
       { direction: "down" },
+      { variant: "x" },
+      { variant: "A" },
+    ],
+  },
+  "d uMArdxA-1/8": {
+    noteLength: "1/8",
+    strums: [
+      { direction: "down", heading: "x" },
       { variant: "pause" },
-      { variant: "pause" },
+      { direction: "up", heading: "^" },
+      { variant: "muted" },
+      { variant: "accent" },
+      { variant: "rest" },
       { direction: "down" },
-      { variant: "pause" },
-      { direction: "up" },
-      { variant: "pause" },
-      { variant: "pause" },
-      { direction: "up" },
-      { direction: "down" },
-      { variant: "pause" },
-      { direction: "up" },
+      { variant: "x" },
+      { variant: "A" },
     ],
   },
   "d ud ud ud u-1/8t": {
@@ -151,6 +127,32 @@ const library: Record<string, StrumPattern> = {
       { direction: "up" },
       { direction: "down" },
       { variant: "pause" },
+      { direction: "up" },
+    ],
+  },
+  "dddddddd-1/8": {
+    noteLength: "1/8",
+    strums: [
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+      { direction: "down" },
+    ],
+  },
+  "dudududu-1/8": {
+    noteLength: "1/8",
+    strums: [
+      { direction: "down" },
+      { direction: "up" },
+      { direction: "down" },
+      { direction: "up" },
+      { direction: "down" },
+      { direction: "up" },
+      { direction: "down" },
       { direction: "up" },
     ],
   },

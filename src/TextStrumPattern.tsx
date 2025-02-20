@@ -1,20 +1,22 @@
+import React from "react";
+
 import StrumPatternSvg from "./StrumPattern";
-import { NoteLength, Strum, StrumPatternOptions } from "./types";
+import type { NoteLength, Strum, StrumPatternOptions } from "./types";
 
 export const parseKey = (
   text: string
-): { strums: Strum[]; strumText: string; noteLength: NoteLength } => {
+): { noteLength: NoteLength; strumText: string; strums: Strum[] } => {
   const split = text.split("-");
   if (split.length !== 2) {
     return { noteLength: "1/4", strumText: "", strums: [] };
   }
   const strums = text2strums(split[0]);
   const noteLength = split[1].replace("t", " triplet") as NoteLength;
-  return { strums, strumText: split[0], noteLength };
+  return { noteLength, strumText: split[0], strums };
 };
 
-const text2strums = (text: string): Strum[] => {
-  return text.split("").map((char) => {
+const text2strums = (text: string): Strum[] =>
+  text.split("").map((char) => {
     const strum: Strum = {};
     switch (char) {
       case "u":
@@ -51,20 +53,19 @@ const text2strums = (text: string): Strum[] => {
     }
     return strum;
   });
-};
 const TextStrumPattern: React.FC<{
-  text: string;
   noteLength: NoteLength;
   options?: Partial<StrumPatternOptions>;
-  svgRef?: React.LegacyRef<SVGSVGElement>;
+  svgRef?: React.RefObject<SVGSVGElement | null>;
+  text: string;
 }> = ({ text, options, noteLength, svgRef }) => {
   const strums = text2strums(text);
   return (
     <StrumPatternSvg
-      svgRef={svgRef}
-      strums={strums}
-      options={options}
       noteLength={noteLength}
+      options={options}
+      strums={strums}
+      svgRef={svgRef}
     />
   );
 };

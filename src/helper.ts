@@ -1,9 +1,5 @@
-export const chordName2id = (name: string) => {
-  return name.replace("#", "is").replace("#", "is").replace("/", "_");
-};
-export const chordId2name = (name: string) => {
-  return name.replace("is", "#").replace("is", "#").replace("_", "/");
-};
+export const chordName2id = (name: string) => name.replace("#", "is").replace("#", "is").replace("/", "_");
+export const chordId2name = (name: string) => name.replace("is", "#").replace("is", "#").replace("_", "/");
 
 export function svgElement2blob(svgEl: SVGSVGElement) {
   svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
