@@ -9,9 +9,9 @@ import type {
 } from "./types";
 
 interface Props extends Partial<StrumPatternDefiniton> {
-  height?: number | string;
+  height?: number | string | null;
   svgRef?: React.RefObject<SVGSVGElement | null>;
-  width?: number | string;
+  width?: number | string | null;
 }
 
 export const defaultStrumOptions: StrumPatternOptions = {
