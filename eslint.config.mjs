@@ -35,7 +35,6 @@ export default [
   eslintConfigPrettier,
   ...fixupConfigRules(
     compat.extends(
-      "plugin:storybook/recommended",
       "plugin:typescript-sort-keys/recommended",
       // React
       "plugin:react-hooks/recommended"
